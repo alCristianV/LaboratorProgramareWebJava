@@ -1,7 +1,5 @@
 package demo;
 
-import org.springframework.http.ResponseEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +26,8 @@ public class Parsers {
     }
 
     public static String FormatCsv(List<Object> values) {
-        //headers = ((Map<String,Object>)values.).values().stream().map((key, value) -> key);
-        //values.forEach(item -> ((Map<String,Object>)item).));
-        List<String> headers = new ArrayList<String>();
-        ((Map<String,Object>)values.get(0)).forEach((key, value) -> headers.add(key));
+        List<String> headers = new ArrayList<>();
+        ((Map<String, Object>) values.get(0)).forEach((key, value) -> headers.add(key));
         StringBuilder tasksCsv = new StringBuilder();
         headers.forEach(field -> tasksCsv.append(String.format("%s,", field)));
         tasksCsv.deleteCharAt(tasksCsv.length() - 1);
