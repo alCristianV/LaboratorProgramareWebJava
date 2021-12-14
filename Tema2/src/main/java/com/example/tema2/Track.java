@@ -1,5 +1,7 @@
 package com.example.tema2;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -21,8 +23,9 @@ public class Track {
     @JoinColumn(name="speaker_id", referencedColumnName = "id")
     private Person speaker;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="room_id", referencedColumnName = "id")
+    @JsonBackReference
     private Room room;
 
     @ManyToMany(mappedBy = "tracks")

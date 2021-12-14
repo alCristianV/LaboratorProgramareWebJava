@@ -1,5 +1,8 @@
 package com.example.tema2;
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,10 +16,11 @@ public class Room {
     @Column(name="number", nullable = false)
     private int number;
 
-    @Column(name="number", nullable = false)
+    @Column(name="capacity", nullable = false)
     private int capacity;
 
-    @OneToMany(mappedBy="room")
+    @OneToMany(mappedBy="room", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Track> tracks;
 
     public Room() {
