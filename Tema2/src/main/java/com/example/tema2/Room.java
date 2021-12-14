@@ -1,15 +1,6 @@
 package com.example.tema2;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -19,26 +10,42 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="first_name", nullable = false)
-    private String code;
+    @Column(name="number", nullable = false)
+    private int number;
+
+    @Column(name="number", nullable = false)
+    private int capacity;
+
+    @OneToMany(mappedBy="room")
+    private Set<Track> tracks;
 
     public Room() {
     }
 
-    public Room(String code) {
-        this.code = code;
+    public Room(int number, int capacity) {
+        this.number = number;
+        this.capacity = capacity;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getCode() {
-        return code;
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public void update(Room room) {
-        this.code = room.getCode();
+        this.number = room.getNumber();
+        this.capacity = room.getCapacity();
     }
 
 }

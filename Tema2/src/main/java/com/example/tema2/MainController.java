@@ -27,6 +27,8 @@ public class MainController {
     private PersonRepository personRepository;
     @Autowired
     private TrackRepository trackRepository;
+    @Autowired
+    private RoomRepository roomRepository;
 
     @GetMapping(path="/persons", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Person>> getPersons() {
@@ -197,6 +199,92 @@ public class MainController {
             Set<Person> attendees = existingTrack.get().getAttendees();
             if (!attendees.isEmpty()) {
                 return ResponseEntity.ok(attendees);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(path="/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Room>> getRooms() {
+        Collection<Room> rooms = (Collection<Room>) roomRepository.findAll();
+        if (!rooms.isEmpty()) {
+            return ResponseEntity.ok(rooms);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @GetMapping(value = "/rooms/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Room> getRoom(@PathVariable("id") long id) {
+        Optional<Room> room = roomRepository.findById(id);
+        if (room.isPresent()) {
+            return ResponseEntity.ok(room.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(path="/rooms", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Void> addRoom(int number, int capacity) {
+        Room room = new Room(number, capacity);
+        roomRepository.save(room);
+        URI uri = WebMvcLinkBuilder.linkTo(MainController.class).slash("rooms").slash(room.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+    @PutMapping(path="/rooms/{id}")
+    public ResponseEntity<Void> changeRoom(@PathVariable("id") long id, @RequestBody Room entity) {
+        Optional<Room> existingRoom = roomRepository.findById(id);
+        if(existingRoom.isPresent()) {
+            existingRoom.get().update(entity);
+            roomRepository.save(existingRoom.get());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping(path = "/rooms/{id}")
+    public ResponseEntity<Void> removeRoom(@PathVariable("id") long id) {
+        Optional<Room> existingRoom = roomRepository.findById(id);
+        if (existingRoom.isPresent()) {
+            for (Track track : existingRoom.get().getTracks()) {
+                track.setRoom(null);
+                trackRepository.save(track);
+            }
+            roomRepository.delete(existingRoom.get());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(path="/tracks/{trackId}/rooms/{roomId}")
+    public ResponseEntity<Void> addTrackRoom(@PathVariable("trackId") long trackId, @PathVariable("roomId") long roomId) {
+        Optional<Track> track = trackRepository.findById(trackId);
+        if (track.isPresent()) {
+            Optional<Room> room = roomRepository.findById(roomId);
+            if(room.isPresent()) {
+                track.get().setRoom(room.get());
+                trackRepository.save(track.get());
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(path="/rooms/{id}/tracks")
+    public ResponseEntity<Set<Track>> getRoomTracks(@PathVariable("id") long id) {
+        Optional<Room> existingRoom = roomRepository.findById(id);
+        if(existingRoom.isPresent()) {
+            Set<Track> tracks = existingRoom.get().getTracks();
+            if (!tracks.isEmpty()) {
+                return ResponseEntity.ok(tracks);
             } else {
                 return ResponseEntity.noContent().build();
             }

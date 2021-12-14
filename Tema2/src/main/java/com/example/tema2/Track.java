@@ -1,14 +1,6 @@
 package com.example.tema2;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -29,7 +21,7 @@ public class Track {
     @JoinColumn(name="speaker_id", referencedColumnName = "id")
     private Person speaker;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="room_id", referencedColumnName = "id")
     private Room room;
 
@@ -67,6 +59,10 @@ public class Track {
 
     public Room getRoom() {
         return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public void update (Track track) {
