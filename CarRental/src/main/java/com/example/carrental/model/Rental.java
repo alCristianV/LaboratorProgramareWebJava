@@ -20,9 +20,6 @@ public class Rental {
     private Client client;
 
     @ManyToOne
-    private Car car;
-
-    @ManyToOne
     private Offer offer;
 
     @Column
@@ -50,14 +47,6 @@ public class Rental {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
     }
 
     public Offer getOffer() {
