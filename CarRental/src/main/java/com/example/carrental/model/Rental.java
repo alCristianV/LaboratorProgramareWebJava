@@ -25,6 +25,9 @@ public class Rental {
     @Column
     private boolean extraInsurance;
 
+    @Column
+    private long totalPrice;
+
     public Date getStartDate() {
         return startDate;
     }
