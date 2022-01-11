@@ -11,6 +11,9 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Id
+    private String plateNumber;
+
     @Column
     private String brand;
 
@@ -19,9 +22,6 @@ public class Car {
 
     @Column
     private Year fabricationYear;
-
-    @Column
-    private String plateNumber;
 
     @Column
     private int engineCapacity;
