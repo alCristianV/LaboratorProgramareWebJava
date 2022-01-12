@@ -1,11 +1,13 @@
 package com.example.carrental.service;
 
+import com.example.carrental.exception.ClientAlreadyExistsException;
+import com.example.carrental.exception.ClientNotFoundException;
 import com.example.carrental.model.Client;
 import com.example.carrental.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,29 +16,36 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
-    public Collection<Client> getAllClients(){
-        Collection<Client> clients = (Collection<Client>) repository.findAll();
-        return clients;
+    public List<Client> getAllClients() {
+        return repository.findAll();
     }
 
-    public Client getClientById(long id){
-        Optional<Client> client = repository.findById(id);
-        if(client.isPresent()){
+    public Client getClientByEmail(String email) {
+        Optional<Client> client = repository.findByEmail(email);
+        if (client.isPresent()) {
             return client.get();
         }
-        return null;
+        throw new ClientNotFoundException();
     }
 
-    public Client getClientByCnp(String cnp){
-        Client client = repository.findByCnp(cnp);
-        return client;
+    public Client create(Client client) {
+        checkUniqueEmail(client);
+        return repository.save(client);
     }
 
-    public void saveClient(Client client){
-        repository.save(client);
+    public Client update(Client client) {
+        Client existingDriver = repository.findById(client.getId())
+                .orElseThrow(() -> new ClientNotFoundException());
+        if (!client.getEmail().equals(existingDriver.getEmail())) {
+            checkUniqueEmail(client);
+        }
+        return repository.save(client);
     }
 
-    public void deleteClient(Client client){
-        repository.delete(client);
+    private void checkUniqueEmail(Client client) {
+        Optional<Client> existingClient = repository.findByEmail(client.getEmail());
+        if (existingClient.isPresent()) {
+            throw new ClientAlreadyExistsException();
+        }
     }
 }

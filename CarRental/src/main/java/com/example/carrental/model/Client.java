@@ -9,8 +9,11 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Id
+    @Column(unique = true)
     private String cnp;
+
+    @Column(unique = true)
+    private String email;
 
     @Column
     private String firstName;
@@ -19,7 +22,28 @@ public class Client {
     private String lastName;
 
     @Column
-    private String address;
+    private String city;
+
+    public Client() {
+
+    }
+
+    public Client(String cnp, String email, String firstName, String lastName, String city) {
+        this.cnp = cnp;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.city = city;
+    }
+
+    public Client(long id, String cnp, String email, String firstName, String lastName, String city) {
+        this.id = id;
+        this.cnp = cnp;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.city = city;
+    }
 
     public String getCnp() {
         return cnp;
@@ -27,6 +51,14 @@ public class Client {
 
     public void setCnp(String cnp) {
         this.cnp = cnp;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -45,12 +77,19 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

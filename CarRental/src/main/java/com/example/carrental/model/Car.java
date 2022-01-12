@@ -11,7 +11,7 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Id
+    @Column(unique = true)
     private String plateNumber;
 
     @Column
@@ -36,6 +36,32 @@ public class Car {
     @Column
     @Enumerated(EnumType.STRING)
     private CarType type;
+
+    public Car(long id, String plateNumber, String brand, String model, Year fabricationYear, int engineCapacity, int horsePower, EngineType engineType, CarType type) {
+        this.id = id;
+        this.plateNumber = plateNumber;
+        this.brand = brand;
+        this.model = model;
+        this.fabricationYear = fabricationYear;
+        this.engineCapacity = engineCapacity;
+        this.horsePower = horsePower;
+        this.engineType = engineType;
+        this.type = type;
+    }
+
+    public Car() {
+    }
+
+    public Car(String plateNumber, String brand, String model, Year fabricationYear, int engineCapacity, int horsePower, EngineType engineType, CarType type) {
+        this.plateNumber = plateNumber;
+        this.brand = brand;
+        this.model = model;
+        this.fabricationYear = fabricationYear;
+        this.engineCapacity = engineCapacity;
+        this.horsePower = horsePower;
+        this.engineType = engineType;
+        this.type = type;
+    }
 
     public String getBrand() {
         return brand;
@@ -75,6 +101,22 @@ public class Car {
 
     public void setEngineCapacity(int engineCapacity) {
         this.engineCapacity = engineCapacity;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public EngineType getEngineType() {
+        return engineType;
+    }
+
+    public void setEngineType(EngineType engineType) {
+        this.engineType = engineType;
     }
 
     public int getHorsePower() {
