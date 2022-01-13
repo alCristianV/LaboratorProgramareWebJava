@@ -21,6 +21,24 @@ public class Offer {
     @Column
     private long extraInsuranceCost;
 
+    public Offer() {
+    }
+
+    public Offer(long id, Car car, long pricePerDay, int minimumRentalDays, long extraInsuranceCost) {
+        this.id = id;
+        this.car = car;
+        this.pricePerDay = pricePerDay;
+        this.minimumRentalDays = minimumRentalDays;
+        this.extraInsuranceCost = extraInsuranceCost;
+    }
+
+    public Offer(Car car, long pricePerDay, int minimumRentalDays, long extraInsuranceCost) {
+        this.car = car;
+        this.pricePerDay = pricePerDay;
+        this.minimumRentalDays = minimumRentalDays;
+        this.extraInsuranceCost = extraInsuranceCost;
+    }
+
     public Car getCar() {
         return car;
     }
@@ -51,5 +69,13 @@ public class Offer {
 
     public void setExtraInsuranceCost(long extraInsuranceCost) {
         this.extraInsuranceCost = extraInsuranceCost;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

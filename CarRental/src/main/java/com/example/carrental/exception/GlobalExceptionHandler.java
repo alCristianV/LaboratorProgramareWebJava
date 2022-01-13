@@ -14,7 +14,9 @@ public class GlobalExceptionHandler {
             CarInvalidParameterException.class,
             CarNotFoundException.class,
             InvalidUpdateRequestException.class,
-            MethodArgumentNotValidException.class,})
+            MethodArgumentNotValidException.class,
+            OfferInvalidFilterException.class,
+            OfferNotFoundException.class})
     public ResponseEntity handle(Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

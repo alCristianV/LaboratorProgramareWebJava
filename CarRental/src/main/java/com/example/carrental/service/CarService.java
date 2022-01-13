@@ -44,6 +44,14 @@ public class CarService {
         return repository.findAll();
     }
 
+    public Car getCarById(long id) {
+        Optional<Car> car = repository.findCarById(id);
+        if (car.isPresent()) {
+            return car.get();
+        }
+        throw new CarNotFoundException();
+    }
+
     private void checkUniquePlateNumber(Car car) {
         Optional<Car> existingCar = repository.findCarByPlateNumber(car.getPlateNumber());
         if (existingCar.isPresent()) {
