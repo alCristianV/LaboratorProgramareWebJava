@@ -43,4 +43,5 @@ public class OfferService {
     public Offer create(Offer offer) {
         return repository.save(offer);
     }
+
 }

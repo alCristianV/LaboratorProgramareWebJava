@@ -2,24 +2,24 @@ package com.example.carrental.dto;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class CreateOfferRequestDto {
 
-    @NotBlank
+    @NotNull
     private long carId;
 
     @Min(0)
     @Max(10000)
-    @NotBlank
+    @NotNull
     private long pricePerDay;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private int minimumRentalDays;
 
     @Min(0)
-    @NotBlank
+    @NotNull
     private long extraInsuranceCost;
 
     public CreateOfferRequestDto() {

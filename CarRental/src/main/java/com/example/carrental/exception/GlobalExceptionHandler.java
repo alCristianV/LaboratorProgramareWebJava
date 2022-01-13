@@ -16,7 +16,9 @@ public class GlobalExceptionHandler {
             InvalidUpdateRequestException.class,
             MethodArgumentNotValidException.class,
             OfferInvalidFilterException.class,
-            OfferNotFoundException.class})
+            OfferNotFoundException.class,
+            OfferNotAvailableException.class,
+            OfferMinimumDaysException.class})
     public ResponseEntity handle(Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

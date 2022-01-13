@@ -28,6 +28,17 @@ public class Rental {
     @Column
     private long totalPrice;
 
+    public Rental() {
+    }
+
+    public Rental(Date startDate, Date endDate, Client client, Offer offer, boolean extraInsurance) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.client = client;
+        this.offer = offer;
+        this.extraInsurance = extraInsurance;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -64,7 +75,23 @@ public class Rental {
         return extraInsurance;
     }
 
+    public long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public void setExtraInsurance(boolean extraInsurance) {
         this.extraInsurance = extraInsurance;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

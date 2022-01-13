@@ -1,9 +1,6 @@
 package com.example.carrental.dto;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.Year;
 
 public class CreateCarRequestDto {
@@ -19,15 +16,15 @@ public class CreateCarRequestDto {
     @NotBlank
     private String model;
 
-    @NotBlank
+    @NotNull
     private Year fabricationYear;
 
-    @NotBlank
+    @NotNull
     @Min(100)
     @Max(10000)
     private int engineCapacity;
 
-    @NotBlank
+    @NotNull
     @Min(10)
     @Max(1000)
     private int horsePower;

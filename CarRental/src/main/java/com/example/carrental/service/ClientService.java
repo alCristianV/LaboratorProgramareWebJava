@@ -30,6 +30,7 @@ public class ClientService {
 
     public Client create(Client client) {
         checkUniqueEmail(client);
+        checkUniqueCnp(client);
         return repository.save(client);
     }
 
@@ -39,13 +40,23 @@ public class ClientService {
         if (!client.getEmail().equals(existingDriver.getEmail())) {
             checkUniqueEmail(client);
         }
+        if (!client.getCnp().equals(existingDriver.getCnp())) {
+            checkUniqueCnp(client);
+        }
         return repository.save(client);
     }
 
     private void checkUniqueEmail(Client client) {
         Optional<Client> existingClient = repository.findByEmail(client.getEmail());
         if (existingClient.isPresent()) {
-            throw new ClientAlreadyExistsException();
+            throw new ClientAlreadyExistsException("email");
+        }
+    }
+
+    private void checkUniqueCnp(Client client) {
+        Optional<Client> existingClient = repository.findByCnp(client.getCnp());
+        if (existingClient.isPresent()) {
+            throw new ClientAlreadyExistsException("cnp");
         }
     }
 }
