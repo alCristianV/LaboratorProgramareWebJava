@@ -35,12 +35,12 @@ public class ClientService {
     }
 
     public Client update(Client client) {
-        Client existingDriver = repository.findById(client.getId())
+        Client existingClient = repository.findById(client.getId())
                 .orElseThrow(() -> new ClientNotFoundException());
-        if (!client.getEmail().equals(existingDriver.getEmail())) {
+        if (!client.getEmail().equals(existingClient.getEmail())) {
             checkUniqueEmail(client);
         }
-        if (!client.getCnp().equals(existingDriver.getCnp())) {
+        if (!client.getCnp().equals(existingClient.getCnp())) {
             checkUniqueCnp(client);
         }
         return repository.save(client);
