@@ -2,6 +2,7 @@ package com.example.carrental.service;
 
 import com.example.carrental.exception.ClientAlreadyExistsException;
 import com.example.carrental.exception.ClientNotFoundException;
+import com.example.carrental.exception.InvalidUpdateRequestException;
 import com.example.carrental.model.Client;
 import com.example.carrental.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -134,7 +135,18 @@ public class ClientServiceTest {
 
         // act & assert
         assertThrows(ClientNotFoundException.class,
-                () -> clientService.update(client.get()));
+                () -> clientService.update(client.get().getId(), client.get()));
+
+    }
+
+    @Test
+    @DisplayName("Test update() Fail Different Ids")
+    public void testUpdateFailInvalidUpdateRequest() {
+        // arrange
+
+        // act & assert
+        assertThrows(InvalidUpdateRequestException.class,
+                () -> clientService.update(2, client.get()));
 
     }
 
@@ -149,7 +161,7 @@ public class ClientServiceTest {
         when(clientRepository.save(client.get())).thenReturn(client.get());
 
         // act
-        Client actualClient = clientService.update(client.get());
+        Client actualClient = clientService.update(client.get().getId(), client.get());
 
         //assert
         assertEquals(client.get(), actualClient);

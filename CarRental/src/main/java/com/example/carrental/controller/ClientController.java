@@ -2,7 +2,6 @@ package com.example.carrental.controller;
 
 import com.example.carrental.dto.CreateClientRequestDto;
 import com.example.carrental.dto.UpdateClientRequestDto;
-import com.example.carrental.exception.InvalidUpdateRequestException;
 import com.example.carrental.mapper.ClientMapper;
 import com.example.carrental.model.Client;
 import com.example.carrental.service.ClientService;
@@ -50,10 +49,7 @@ public class ClientController {
             @PathVariable long id,
             @Valid
             @RequestBody UpdateClientRequestDto request) {
-        if (id != request.getId()) {
-            throw new InvalidUpdateRequestException();
-        }
-        return ResponseEntity.ok(service.update(mapper.updateClientRequestDtoToClient(request)));
+        return ResponseEntity.ok(service.update(id, mapper.updateClientRequestDtoToClient(request)));
     }
 
 

@@ -33,11 +33,6 @@ public class RentalService {
         return rentals;
     }
 
-    public List<Long> getAllActiveOffersIds(Date startdate, Date endDate) {
-        List<Long> offersIds = repository.getAllActiveOffersIds(startdate, endDate);
-        return offersIds;
-    }
-
     public Rental create(Rental rental) {
 
         Offer offer = rental.getOffer();
@@ -76,6 +71,11 @@ public class RentalService {
         long daysNumber = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
         return (int) daysNumber;
+    }
+
+    private List<Long> getAllActiveOffersIds(Date startdate, Date endDate) {
+        List<Long> offersIds = repository.getAllActiveOffersIds(startdate, endDate);
+        return offersIds;
     }
 
 

@@ -39,6 +39,16 @@ public class Rental {
         this.extraInsurance = extraInsurance;
     }
 
+    public Rental(long id, Date startDate, Date endDate, Client client, Offer offer, boolean extraInsurance) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.client = client;
+        this.offer = offer;
+        this.extraInsurance = extraInsurance;
+        this.totalPrice = totalPrice;
+    }
+
     public Date getStartDate() {
         return startDate;
     }

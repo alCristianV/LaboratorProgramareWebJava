@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Year;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -108,8 +109,36 @@ public class OfferServiceTest {
 
         // act & assert
         OfferInvalidFilterException e = assertThrows(OfferInvalidFilterException.class,
-                () -> offerService.get(0, 0, -1));
+                () -> offerService.get(0, 1000, -1));
 
         assertEquals("rentalDays has not a valid value", e.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test Get All Offers By PricePerDay and RentalDays Success")
+    public void testGetAllOffersRentalDaysPriceDaysSuccess() {
+
+        when(offerRepository.findAllByPricePerDayBetweenAndMinimumRentalDaysLessThanEqual(0, 1000, 10)).thenReturn(List.of(offer.get()));
+
+        // act & assert
+        List<Offer> offers = offerService.get(0, 1000, 10);
+
+        // assert
+        assertEquals(List.of(offer.get()), offers);
+        assertEquals(1, offers.size());
+    }
+
+    @Test
+    @DisplayName("Test Get All Offers By PricePerDay Success")
+    public void testGetAllOffersPriceDaysSuccess() {
+
+        when(offerRepository.findAllByPricePerDayBetween(0, 1000)).thenReturn(List.of(offer.get()));
+
+        // act & assert
+        List<Offer> offers = offerService.get(0, 1000, 0);
+
+        // assert
+        assertEquals(List.of(offer.get()), offers);
+        assertEquals(1, offers.size());
     }
 }

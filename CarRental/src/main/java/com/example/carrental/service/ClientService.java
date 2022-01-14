@@ -2,6 +2,7 @@ package com.example.carrental.service;
 
 import com.example.carrental.exception.ClientAlreadyExistsException;
 import com.example.carrental.exception.ClientNotFoundException;
+import com.example.carrental.exception.InvalidUpdateRequestException;
 import com.example.carrental.model.Client;
 import com.example.carrental.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,11 @@ public class ClientService {
         return repository.save(client);
     }
 
-    public Client update(Client client) {
+    public Client update(long id, Client client) {
+        if (id != client.getId()) {
+            throw new InvalidUpdateRequestException();
+        }
+
         Client existingClient = repository.findById(client.getId())
                 .orElseThrow(() -> new ClientNotFoundException());
         if (!client.getEmail().equals(existingClient.getEmail())) {
