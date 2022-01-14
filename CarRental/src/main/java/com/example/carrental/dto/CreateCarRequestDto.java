@@ -20,7 +20,7 @@ public class CreateCarRequestDto {
     private Year fabricationYear;
 
     @NotNull
-    @Min(100)
+    @Min(0)
     @Max(10000)
     private int engineCapacity;
 

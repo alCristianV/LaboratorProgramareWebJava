@@ -67,6 +67,7 @@ public class ClientControllerTest {
         String endpoint = "/clients/client@email.com";
         mockMvc.perform(get(endpoint))
                 .andExpect(status().isBadRequest());
+
     }
 
 //    @Test
