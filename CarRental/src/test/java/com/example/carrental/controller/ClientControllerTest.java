@@ -4,6 +4,7 @@ import com.example.carrental.exception.ClientNotFoundException;
 import com.example.carrental.mapper.ClientMapper;
 import com.example.carrental.model.Client;
 import com.example.carrental.service.ClientService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class ClientControllerTest {
     private ClientMapper clientMapper;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeAll
     public static void setup() {
@@ -72,13 +75,15 @@ public class ClientControllerTest {
 
 //    @Test
 //    public void testCreateClientSuccess() throws Exception {
-//        CreateClientRequestDto createClientRequestDto = new CreateClientRequestDto(client.getCnp(), client.getEmail(), client.getFirstName(), client.getLastName(), client.getCity());
-//        when(clientService.create(client)).thenReturn(client);
+//        CreateClientRequestDto createClientRequestDto = new CreateClientRequestDto("0000000000000", "new@email.com", client.getFirstName(), client.getLastName(), client.getCity());
 //        when(clientMapper.createClientRequestDtoToClient(createClientRequestDto)).thenReturn(client);
+//        when(clientService.create(client)).thenReturn(client);
 //        String endpoint = "/clients";
 //
-//        mockMvc.perform(post(endpoint)
-//                        .contentType(MediaType.APPLICATION_JSON))
+//        mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(createClientRequestDto))
+//                )
 //                .andExpect(status().isCreated());
 //    }
 
